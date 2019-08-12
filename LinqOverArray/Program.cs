@@ -12,14 +12,45 @@ namespace LinqOverArray
         {
             Console.WriteLine("****** Fun with LINQ to Object *****\n");
             QueryOverString();
+            QueryOverStringWithExtensionMethod();
 
         }
         static void QueryOverString()
         {
-            string[] currentVideoGames = {"Morrowind", "Uncharted 2", "Fallout 3", "Daxter", "System Shock 2"};
+            string[] currentVideoGames = { "Morrowind", "Uncharted 2", "Fallout 3", "Daxter", "System Shock 2" };
             IEnumerable<string> subset = from g in currentVideoGames where g.Contains(" ") orderby g select g;
-            foreach(string s in subset)
+            foreach (string s in subset)
                 Console.WriteLine("Item: {0}", s);
+        }
+        static void QueryOverStringWithExtensionMethod()
+        {
+            string[] currentVideoGames = { "Morrowind", "Uncharted 2", "Fallout 3", "Daxter", "System Shock 2" };
+            IEnumerable<string> subset = currentVideoGames.Where(g => g.Contains(" ")).OrderBy(g => g).Select(g => g);
+            foreach (string s in subset)
+                Console.WriteLine("Item: {0}", s);
+        }
+        static void ueryOverStringsLongHand()
+        {
+            string[] currentVideoGames = { "Morrowind", "Uncharted 2", "Fallout 3", "Daxter", "System Shock 2" };
+            string[] gamesWithSpaces = new string[5];
+            for (int i = 0; i < currentVideoGames.Length; i++)
+            {
+                if (currentVideoGames[i].Contains(" "))
+                    gamesWithSpaces[i] = currentVideoGames[i];
+            }
+            // Now sort them.
+            Array.Sort(gamesWithSpaces);
+            // Print out the results.
+            foreach (string s in gamesWithSpaces)
+            {
+                if (s != null)
+                    Console.WriteLine("Item: {0}", s);
+            }
+            Console.WriteLine();
+        }
+        static void ReflectOverQueryResults(object resultSet, string queryType = "Query Expressions")
+        {
+            Console.WriteLine($" Info about your query using {queryType} *****");
         }
     }
 }
