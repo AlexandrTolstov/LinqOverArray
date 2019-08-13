@@ -19,6 +19,7 @@ namespace LinqOverArray
         {
             string[] currentVideoGames = { "Morrowind", "Uncharted 2", "Fallout 3", "Daxter", "System Shock 2" };
             IEnumerable<string> subset = from g in currentVideoGames where g.Contains(" ") orderby g select g;
+            ReflectOverQueryResults(subset);
             foreach (string s in subset)
                 Console.WriteLine("Item: {0}", s);
         }
@@ -26,6 +27,7 @@ namespace LinqOverArray
         {
             string[] currentVideoGames = { "Morrowind", "Uncharted 2", "Fallout 3", "Daxter", "System Shock 2" };
             IEnumerable<string> subset = currentVideoGames.Where(g => g.Contains(" ")).OrderBy(g => g).Select(g => g);
+            ReflectOverQueryResults(subset, "Extension Method");
             foreach (string s in subset)
                 Console.WriteLine("Item: {0}", s);
         }
@@ -51,6 +53,8 @@ namespace LinqOverArray
         static void ReflectOverQueryResults(object resultSet, string queryType = "Query Expressions")
         {
             Console.WriteLine($" Info about your query using {queryType} *****");
+            Console.WriteLine("resultSet is of type: {0}", resultSet.GetType().Name);
+            Console.WriteLine("resultSet location: {0}", resultSet.GetType().Assembly.GetName().Name);
         }
     }
 }
